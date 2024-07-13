@@ -42,4 +42,34 @@ public class Helper {
         return true;
 
     }
+
+
+    public static void optionPaneDialogEN(){
+        UIManager.put("OptionPane.okButtonText", "Okey");
+    }
+
+    public static void showMsg(String message){
+        String msg,title;
+        optionPaneDialogEN();
+        switch (message) {
+            case "fill" -> {
+                msg = "Please enter required fields!";
+                title = "ERROR!";
+            }
+            case "done" -> {
+                msg = "Success";
+                title = "Result";
+            }
+            case "error" -> {
+                msg = "An error has occured!";
+                title = "ERROR!";
+            }
+            default -> {
+                msg = message;
+                title = "Message";
+            }
+        }
+
+        JOptionPane.showMessageDialog(null,msg,title,JOptionPane.INFORMATION_MESSAGE);
+    }
 }

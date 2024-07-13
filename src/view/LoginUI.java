@@ -34,14 +34,11 @@ public class LoginUI extends JFrame {
             JTextField[] checkList = {fld_mail,fld_password};
 
             if (!Helper.isValidEmail(fld_mail.getText())){
-                System.out.println("Enter a valid email!");
-            }
-
-            if (Helper.isFieldListEmpty(checkList)){
-                System.out.println("Please enter required fields!");
+                Helper.showMsg("Please enter a valid email!");
+            }else if (Helper.isFieldListEmpty(checkList)){
+                Helper.showMsg("fill");
             }else {
 
-                System.out.println("login can ");
             }
         });
     }
