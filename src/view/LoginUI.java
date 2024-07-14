@@ -47,7 +47,9 @@ public class LoginUI extends JFrame {
                 if (user == null){
                     Helper.showMsg("User does not exist!");
                 } else{
-                    System.out.println(user.toString());
+
+                    this.dispose();
+                    DashboardUI dashboardUI = new DashboardUI(user);
                 }
 
             }
