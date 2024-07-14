@@ -46,6 +46,9 @@ public class Helper {
 
     public static void optionPaneDialogEN(){
         UIManager.put("OptionPane.okButtonText", "Okey");
+        UIManager.put("OptionPane.yesButtonText", "Yess");
+        UIManager.put("OptionPane.noButtonText", "Noo");
+
     }
 
     public static void showMsg(String message){
@@ -71,5 +74,17 @@ public class Helper {
         }
 
         JOptionPane.showMessageDialog(null,msg,title,JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static boolean confirm(String str){
+        String msg;
+
+        if (str.equals("sure")){
+            msg = "Are you sure?";
+        }else {
+            msg = str;
+        }
+        return JOptionPane.showConfirmDialog(null,msg,"Confirm",JOptionPane.YES_NO_OPTION)== 0;
+
     }
 }

@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -73,7 +75,13 @@ public class DashboardUI extends JFrame{
         });
 
         this.btn_customer_new.addActionListener(e->{
-
+            CustomerUI customerUI = new CustomerUI(new Customer());
+            customerUI.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadCustomerTable(null);
+                }
+            });
         });
 
     }
@@ -90,10 +98,24 @@ public class DashboardUI extends JFrame{
 
         this.popup_customer.add("Update").addActionListener(e -> {
             int selectId = Integer.parseInt(tbl_customer.getValueAt(tbl_customer.getSelectedRow(),0).toString());
-            System.out.println(selectId);
+            CustomerUI customerUI = new CustomerUI(this.customerController.getById(selectId) );
+            customerUI.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadCustomerTable(null);
+                }
+            });
         });
         this.popup_customer.add("Delete").addActionListener(e->{
-
+            int selectId = Integer.parseInt(tbl_customer.getValueAt(tbl_customer.getSelectedRow(),0).toString());
+          if (Helper.confirm("sure")){
+              if(this.customerController.delete(selectId)){
+                  Helper.showMsg("done");
+                  loadCustomerTable(null);
+              }else {
+                  Helper.showMsg("error");
+              }
+          }
         });
 
         this.tbl_customer.setComponentPopupMenu(this.popup_customer);

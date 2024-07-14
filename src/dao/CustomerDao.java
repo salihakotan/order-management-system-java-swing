@@ -51,6 +51,35 @@ public class CustomerDao {
 
     }
 
+    public boolean update(Customer customer){
+        String query = "UPDATE customer SET name=?,type=?, phone=?,mail=?,address=? WHERE id=?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setString(1,customer.getName());
+            pr.setString(2,customer.getType().toString());
+            pr.setString(3,customer.getPhone());
+            pr.setString(4,customer.getMail());
+            pr.setString(5,customer.getAddress());
+            pr.setInt(6,customer.getId());
+
+            return pr.executeUpdate() != -1;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean delete(int id){
+        String query = "DELETE FROM customer WHERE id=?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1,id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public Customer match(ResultSet resultSet) throws SQLException {
         Customer customer = new Customer();
@@ -65,6 +94,25 @@ public class CustomerDao {
 
         return customer;
 
+    }
+
+    public Customer getById(int id) {
+        Customer customer = null;
+        String query = "SELECT * FROM customer WHERE id=?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1,id);
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()){
+                customer = this.match(rs);
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return customer;
     }
 
 }
